@@ -1,8 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const db_connection = require("./config/db");
+const allRoutes = require("./routes");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 db_connection
   .then(() => {
@@ -11,6 +13,9 @@ db_connection
   .catch(() => {
     console.log("Failed connecting to mongoDB");
   });
+
+app.use(express.json());
+app.use(allRoutes);
 
 app.listen(PORT, () => {
   console.log("Server running on PORT ", PORT);
