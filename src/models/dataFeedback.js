@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const dataFeedbackSchema = new mongoose.Schema({
+  user_id: {
+    type: mongoose.ObjectId,
+    ref: "User",
+    required: true,
+  },
   nama: {
     type: String,
     required: true,

@@ -47,7 +47,7 @@ const dataWasteSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  Deskripsi: {
+  deskripsi: {
     type: String,
     required: true,
   },

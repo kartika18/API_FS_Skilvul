@@ -2,16 +2,6 @@ const User = require("../models/user");
 const dataWaste = require("../models/dataWaste");
 
 module.exports = {
-  createUser: async (req, res) => {
-    let data = req.body;
-
-    await User.create(data);
-
-    res.status(201).json({
-      message: "Success create data user",
-    });
-  },
-
   getAllUser: async (req, res) => {
     const users = await User.find();
 
