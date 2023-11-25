@@ -12,6 +12,15 @@ module.exports = {
     });
   },
 
+  getAllUser: async (req, res) => {
+    const users = await User.find();
+
+    res.status(200).json({
+      message: "Success get all data user",
+      data: users,
+    });
+  },
+
   getUserById: async (req, res) => {
     const { id } = req.params;
 
@@ -31,15 +40,6 @@ module.exports = {
     res.status(200).json({
       message: "Success get Todos by id",
       data: dataWastes,
-    });
-  },
-
-  getAllUser: async (req, res) => {
-    const users = await User.find();
-
-    res.status(200).json({
-      message: "Success get all data user",
-      data: users,
     });
   },
 };
