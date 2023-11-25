@@ -8,7 +8,7 @@ const {
 const route = express.Router();
 
 route.get("/", getAllUser);
-route.get("/create", createUser);
+route.post("/create", createUser);
 route.get("/:id", getUserById);
 route.get("/:id/dataWaste", getUserDataWaste);
 
