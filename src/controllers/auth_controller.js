@@ -4,6 +4,32 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 module.exports = {
+  registAuth: async (req, res) => {
+    try {
+      const { nama, email, password } = req.body;
+
+      const checkUserExist = await User.findOne({ email: email });
+      if (checkUserExist)
+        return res.status(400).json({
+          message: "email already exist",
+        });
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      await User.create({
+        nama: nama,
+        email: email,
+        password: hashedPassword,
+      });
+
+      res.status(201).json({
+        message: "Success create account",
+      });
+    } catch (error) {
+      res.status(400).json(error.message);
+    }
+  },
+
   loginAuth: async (req, res) => {
     try {
       const userLoginInfo = req.body;
@@ -29,32 +55,6 @@ module.exports = {
       });
     } catch (error) {
       res.status(401).json(error.message);
-    }
-  },
-
-  registAuth: async (req, res) => {
-    try {
-      const { nama, email, password } = req.body;
-
-      const checkUserExist = await User.findOne({ email: email });
-      if (checkUserExist)
-        return res.status(400).json({
-          message: "email already exist",
-        });
-
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      await User.create({
-        nama: nama,
-        email: email,
-        password: hashedPassword,
-      });
-
-      res.status(201).json({
-        message: "Success create account",
-      });
-    } catch (error) {
-      res.status(400).json(error.message);
     }
   },
 };

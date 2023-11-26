@@ -5,6 +5,11 @@ module.exports = {
   getAllUser: async (req, res) => {
     const users = await User.find();
 
+    if (!users)
+      return res.status(404).json({
+        message: "Users Not Found",
+      });
+
     res.status(200).json({
       message: "Success get all data user",
       data: users,
@@ -14,11 +19,16 @@ module.exports = {
   getUserById: async (req, res) => {
     const { id } = req.params;
 
-    const users = await User.find({ id: id });
+    const user = await User.find({ id: id });
+
+    if (!user)
+      return res.status(404).json({
+        message: "User Not Found",
+      });
 
     res.status(200).json({
-      message: "Success get User by Id",
-      data: users,
+      message: "Success Get User by Id",
+      data: user,
     });
   },
 
@@ -27,8 +37,13 @@ module.exports = {
 
     const dataWastes = await dataWaste.find({ user_id: id });
 
+    if (dataWastes.length === 0)
+      return res.status(404).json({
+        message: "Data Waste by This Id Not Found",
+      });
+
     res.status(200).json({
-      message: "Success get Todos by id",
+      message: "Success Get Data Waste by Id",
       data: dataWastes,
     });
   },

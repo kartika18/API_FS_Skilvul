@@ -15,7 +15,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    minLength: 8,
+    validate: {
+      validator: (value) => {
+        return value.length >= 8;
+      },
+      message: "Password must be at least 8 characters long",
+    },
   },
 });
 

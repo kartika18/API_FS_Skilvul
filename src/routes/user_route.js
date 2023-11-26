@@ -4,10 +4,11 @@ const {
   getAllUser,
   getUserById,
 } = require("../controllers/user_controller");
+const verifyToken = require("../middleware/auth");
 const route = express.Router();
 
-route.get("/", getAllUser);
-route.get("/:id", getUserById);
-route.get("/:id/dataWaste", getUserDataWaste);
+route.get("/", verifyToken, getAllUser);
+route.get("/:id", verifyToken, getUserById);
+route.get("/:id/dataWaste", verifyToken, getUserDataWaste);
 
 module.exports = route;
