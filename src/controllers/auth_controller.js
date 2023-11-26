@@ -1,5 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 
 module.exports = {
@@ -10,8 +11,11 @@ module.exports = {
       const user = await User.findOne({ email: userLoginInfo.email });
       if (!user) throw new Error("Invalid user");
 
-      if (user.password !== userLoginInfo.password)
-        throw new Error("Invalid Password");
+      const comparePassword = await bcrypt.compare(
+        userLoginInfo.password,
+        user.password
+      );
+      if (!comparePassword) throw new Error("Invalid Password");
 
       const token = jwt.sign(
         { id: user._id, email: user.email },
@@ -28,5 +32,29 @@ module.exports = {
     }
   },
 
-  registAuth: async (req, res) => {},
+  registAuth: async (req, res) => {
+    try {
+      const { nama, email, password } = req.body;
+
+      const checkUserExist = await User.findOne({ email: email });
+      if (checkUserExist)
+        return res.status(400).json({
+          message: "email already exist",
+        });
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      await User.create({
+        nama: nama,
+        email: email,
+        password: hashedPassword,
+      });
+
+      res.status(201).json({
+        message: "Success create account",
+      });
+    } catch (error) {
+      res.status(400).json(error.message);
+    }
+  },
 };
