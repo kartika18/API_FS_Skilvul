@@ -19,9 +19,9 @@ module.exports = {
   getUserById: async (req, res) => {
     const { id } = req.params;
 
-    const user = await User.find({ id: id });
+    const user = await User.find({ _id: id });
 
-    if (!user)
+    if (user.length === 0)
       return res.status(404).json({
         message: "User Not Found",
       });
