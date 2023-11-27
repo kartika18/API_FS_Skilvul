@@ -6,13 +6,13 @@ const auth_route = require("./auth_route");
 const dataWaste_route = require("./dataWaste_route");
 const dataFeedback_route = require("./dataFeedback_route");
 
-route.get("/", (req, res) => {
+route.get("/api", (req, res) => {
   res.status(200).json("Ini dari express mongoose");
 });
 
-route.use("/user", user_route);
-route.use("/auth", auth_route);
-route.use("/dataWaste", dataWaste_route);
-route.use("/dataFeedback", dataFeedback_route);
+route.use("/api/user", user_route);
+route.use("/api/auth", auth_route);
+route.use("/api/dataWaste", dataWaste_route);
+route.use("/api/dataFeedback", dataFeedback_route);
 
 module.exports = route;
