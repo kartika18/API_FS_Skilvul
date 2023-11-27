@@ -21,7 +21,7 @@ const dataFeedbackSchema = new mongoose.Schema({
     minLength: 14,
   },
   no_hp: {
-    type: Number,
+    type: String,
     required: true,
     minLength: 10,
     maxLength: 12,

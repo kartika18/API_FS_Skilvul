@@ -5,13 +5,13 @@ module.exports = {
   getAllUser: async (req, res) => {
     const users = await User.find();
 
-    if (!users)
+    if (users.length === 0)
       return res.status(404).json({
         message: "Users Not Found",
       });
 
     res.status(200).json({
-      message: "Success get all data user",
+      message: "Success Get All Data User",
       data: users,
     });
   },
