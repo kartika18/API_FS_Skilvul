@@ -7,11 +7,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT;
 
-const corsURL = {
-  origin: "https://api-fs-skilvul.vercel.app/api",
-};
-
-app.use(cors(corsURL));
+app.use(cors());
 
 db_connection
   .then(() => {
